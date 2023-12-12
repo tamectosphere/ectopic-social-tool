@@ -1,6 +1,6 @@
 .PHONY:
 services:
-	docker-compose up
+	docker-compose -f docker-compose.yml up -d
 
 .PHONY:
 down:
@@ -9,3 +9,7 @@ down:
 .PHONY:
 psql:
 	docker-compose -f docker-compose.yml exec postgres psql -U ectopic_social_tool_local
+
+.PHONY: 
+dev: services
+	mix phx.server
