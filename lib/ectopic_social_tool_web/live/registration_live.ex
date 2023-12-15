@@ -9,7 +9,7 @@ defmodule EctopicSocialToolWeb.RegistrationLive do
     <.right_half_layout />
     <.left_half_layout>
       <.header class="text-center">
-        Log in
+        Register
       </.header>
       <div class="space-y-8">
         <div>

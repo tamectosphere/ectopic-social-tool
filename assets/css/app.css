@@ -52,3 +52,45 @@
 .phx-submit-loading .inputs {
     display: none;
 }
+
+.fancy-background {
+    background: linear-gradient(to right,
+            #ffa500,
+            /* Orange */
+            #ff7f50,
+            /* Coral */
+            #ff4500,
+            /* Red-Orange */
+            #ff6347,
+            /* Tomato */
+            #ff4500);
+    /* Red */
+    background-size: 400% 400%;
+    animation: GradientAnimate 15s ease infinite;
+}
+
+
+.fancy-background::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.1;
+    z-index: 1;
+}
+
+@keyframes GradientAnimate {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
