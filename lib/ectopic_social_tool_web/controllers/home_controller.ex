@@ -1,4 +1,4 @@
-defmodule EctopicSocialToolWeb.PageController do
+defmodule EctopicSocialToolWeb.HomeController do
   use EctopicSocialToolWeb, :controller
 
   def home(conn, _params) do

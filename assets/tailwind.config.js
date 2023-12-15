@@ -14,12 +14,19 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: "#FD4F00",
-      }
+        brand: "#FD681E",
+        brandHover: "#FD4F00",
+      },
+      
+      
     },
   },
+  daisyui: {
+    themes: ["light", "dark", "cupcake"],
+  },
   plugins: [
-    require("@tailwindcss/forms"),
+    require('daisyui'),
+    //require("@tailwindcss/forms"),
     // Allows prefixing tailwind classes with LiveView classes to add rules
     // only when LiveView classes are applied, for example:
     //

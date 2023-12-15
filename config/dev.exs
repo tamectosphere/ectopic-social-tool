@@ -5,11 +5,11 @@ config :ectopic_social_tool, EctopicSocialTool.Repo,
   username: "ectopic_social_tool_local",
   password: "localpass",
   hostname: "localhost",
-  database: "ectopic_social_tool_dev",
+  database: "ectopic_social_tool_local",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10,
-  port: 5032
+  port: 5031
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

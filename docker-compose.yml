@@ -3,7 +3,7 @@ services:
   postgres:
     image: postgres:15.5
     ports:
-      - '5032:5432'
+      - '5031:5432'
     environment:
       TZ: 'Asia/Bangkok'
       POSTGRES_DB: ectopic_social_tool_local

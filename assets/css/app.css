@@ -3,3 +3,52 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) translateX(-50%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) translateX(-50%);
+    }
+}
+
+.flashhits {
+    animation: slideDown 0.3s ease-out forwards;
+    left: 50%;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0) translateX(-50%);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-20px) translateX(-50%);
+    }
+}
+
+.flashhide {
+    animation: slideUp 0.3s ease-out forwards;
+    left: 50%;
+}
+
+.while-submitting {
+    display: none;
+}
+
+.inputs {
+    display: block;
+}
+
+.phx-submit-loading .while-submitting {
+    display: block;
+}
+
+.phx-submit-loading .inputs {
+    display: none;
+}

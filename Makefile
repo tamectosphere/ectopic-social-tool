@@ -10,6 +10,6 @@ down:
 psql:
 	docker-compose -f docker-compose.yml exec postgres psql -U ectopic_social_tool_local
 
-.PHONY: 
+.PHONY: dev
 dev: services
-	mix phx.server
+	set -a; . ./.env; set +a; mix phx.server

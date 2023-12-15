@@ -22,8 +22,56 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
+let Hooks = {}
+
+Hooks.OnToastOpen = {
+    mounted() {
+        const toasts = document.querySelectorAll(".toast");
+        
+        toasts.forEach(toast => {
+
+            const id = toast.id
+            const flashKey = id.split('-')[1]
+
+            setTimeout(() => {
+                if (toast) {
+                    clearToast(this, toast, flashKey)
+                }
+            }, 2000); 
+        });
+    }
+}
+
+
+Hooks.OnToastClose = {
+    mounted() {
+        this.el.addEventListener("click", e => {
+            const id = e.target.parentElement.parentElement.parentElement.id
+            const flashKey = id.split('-')[1]
+            const toast = document.querySelector(`#${id}`);
+            
+            if (toast) {
+                clearToast(this, toast, flashKey)
+            }
+        });
+    }
+}
+
+function clearToast(context, toast, flashKey){
+    toast.classList.remove("flashhits");
+    toast.classList.add("flashhide");
+
+    toast.addEventListener('animationend', () => {
+        if (flashKey) {
+            context.pushEvent("lv:clear-flash", {key: flashKey})
+        }
+    });
+
+}
+
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
+let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken},  hooks: Hooks})
 
 // Show progress bar on live navigation and form submits
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})

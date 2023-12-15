@@ -17,7 +17,16 @@ defmodule EctopicSocialToolWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
+  alias EctopicSocialToolWeb.CoreComponents.SharedComponents
   import EctopicSocialToolWeb.Gettext
+
+  defdelegate left_half_layout(assigns), to: SharedComponents
+  defdelegate right_half_layout(assigns), to: SharedComponents
+  defdelegate toast(assigns), to: SharedComponents
+  defdelegate toast_group(assigns), to: SharedComponents
+  defdelegate ectopic_button(assigns), to: SharedComponents
+  defdelegate navigate_button(assigns), to: SharedComponents
+  defdelegate ectopic_form(assigns), to: SharedComponents
 
   @doc """
   Renders a modal.
@@ -376,7 +385,7 @@ defmodule EctopicSocialToolWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
+          "input mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 focus:outline-none sm:text-sm sm:leading-6",
           "phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
           @errors == [] && "border-zinc-300 focus:border-zinc-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
