@@ -13,14 +13,14 @@ defmodule EctopicSocialToolWeb.ProviderAuthController do
 
   def provider_callback(conn, %{"provider" => provider}) do
     case ProvidersAuth.callback(conn, provider) do
-      :ok ->
+      {:ok, _} ->
         conn
         |> put_flash(:success, "Connect #{provider} account success")
         |> redirect(to: ~p"/publishing")
 
-      :error ->
+      {:error, message} ->
         conn
-        |> put_flash(:error, "Failed login with #{provider} account")
+        |> put_flash(:error, message)
         |> redirect(to: ~p"/publishing")
     end
   end

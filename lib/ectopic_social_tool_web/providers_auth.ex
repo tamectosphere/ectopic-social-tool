@@ -2,6 +2,7 @@ defmodule EctopicSocialToolWeb.ProvidersAuth do
   import Plug.Conn
 
   alias Assent.Config
+  alias EctopicSocialTool.SocialAccounts
   alias EctopicSocialTool.Utils
 
   def request(conn, provider) do
@@ -33,11 +34,15 @@ defmodule EctopicSocialToolWeb.ProvidersAuth do
     strategy = updated_config[:strategy]
 
     case updated_config |> strategy.callback(params) do
-      {:ok, %{user: user, token: token} = result} ->
-        :ok
+      {:ok, result} ->
+        SocialAccounts.connect_social_account_to_user(
+          provider,
+          conn.assigns[:current_user].id,
+          result
+        )
 
-      {:error, error} ->
-        :error
+      {:error, _} ->
+        {:error, "Unable to connect with #{provider} account"}
     end
   end
 
