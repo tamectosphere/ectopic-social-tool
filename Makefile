@@ -14,6 +14,10 @@ psql:
 seeds:
 	mix run priv/repo/seeds.exs
 
+.PHONY:
+iex:
+	iex -S mix
+
 .PHONY: dev
 dev: services
 	set -a; . ./.env; set +a; mix phx.server

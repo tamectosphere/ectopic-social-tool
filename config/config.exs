@@ -31,6 +31,11 @@ config :ectopic_social_tool, EctopicSocialToolWeb.Endpoint,
 # at the `config/runtime.exs`.
 config :ectopic_social_tool, EctopicSocialTool.Mailer, adapter: Swoosh.Adapters.Local
 
+config :ectopic_social_tool, Oban,
+  repo: EctopicSocialTool.Repo,
+  plugins: [Oban.Plugins.Pruner],
+  queues: [default: 10, publishers: 50]
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",

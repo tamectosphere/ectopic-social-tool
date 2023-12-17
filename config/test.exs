@@ -23,6 +23,8 @@ config :ectopic_social_tool, EctopicSocialToolWeb.Endpoint,
 # In test we don't send emails.
 config :ectopic_social_tool, EctopicSocialTool.Mailer, adapter: Swoosh.Adapters.Test
 
+config :ectopic_social_tool, Oban, testing: :inline
+
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
 
