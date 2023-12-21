@@ -16,7 +16,7 @@ defmodule EctopicSocialToolWeb.ProviderAuthController do
       {:ok, _} ->
         conn
         |> put_flash(:success, "Connect #{provider} account success")
-        |> redirect(to: ~p"/publishing")
+        |> redirect(to: ~p"/social-channels")
 
       {:error, message} ->
         conn

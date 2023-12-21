@@ -53,7 +53,8 @@ defmodule EctopicSocialTool.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:bcrypt_elixir, "~> 3.0"},
       {:assent, "~> 0.2.9"},
-      {:oban, "~> 2.16"}
+      {:oban, "~> 2.16"},
+      {:paginator, "~> 1.2.0"}
     ]
   end
 

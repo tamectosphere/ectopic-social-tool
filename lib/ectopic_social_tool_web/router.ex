@@ -48,6 +48,7 @@ defmodule EctopicSocialToolWeb.Router do
       on_mount: [{EctopicSocialToolWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingLive, :index
       live "/publishing", PublishingLive.Index, :index
+      live "/social-channels", SocialChannelsLive.Index, :index
     end
   end
 

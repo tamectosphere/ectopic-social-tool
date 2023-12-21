@@ -42,6 +42,14 @@ defmodule EctopicSocialTool.SocialAccounts.SocialAccount do
     ])
   end
 
+  def get_social_account_cursor_query(query, user_id) do
+    query
+    |> join(:inner, [sa], op in assoc(sa, :oauth_provider))
+    |> where([sa], sa.user_id == ^user_id)
+    |> select([sa, op], %{id: sa.id, title: sa.title, provider_name: op.name})
+    |> order_by([sa], asc: sa.id)
+  end
+
   def get_social_account_query(query, where, select \\ nil, preload \\ []) do
     query
     |> apply_where(where)

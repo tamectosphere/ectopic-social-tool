@@ -1,0 +1,47 @@
+<div class="flex flex-col space-y-10">
+  <.header class="text-center">
+    Manage your social channels
+  </.header>
+  <div class="collapse bg-base-200">
+    <input type="checkbox" />
+    <div class="collapse-title text-xl font-medium">
+      Add new social accounts
+    </div>
+    <div class="overflow-y-scroll h-46 sm:h-64 md:h-96 lg:h-full flex flex-col justify-between">
+      <ul class="scroll-content space-y-4" id="social-providers" phx-update="stream">
+        <li :for={{dom_id, oauth_provider} <- @streams.oauth_providers}} id={dom_id}
+          class="py-2 px-4 flex justify-between items-center">
+          <text>
+            <%= oauth_provider.name %>
+          </text>
+          <.navigate_button navigate={~p"/auth/#{oauth_provider.name}"}>connect</.navigate_button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="overflow-y-scroll h-46 sm:h-64 md:h-96 lg:h-full flex flex-col justify-between">
+    <ul class="scroll-content space-y-4"
+      id="social-accounts" phx-update="stream">
+      <li :for={{dom_id, social_accounts} <- @streams.social_accounts}} id={dom_id} class="py-2 px-4 flex justify-between items-center">
+        <text><%= social_accounts.provider_name %> - <%= social_accounts.title %></text>
+        <.ectopic_button phx-click="unlink" phx-value-social-account-id={social_accounts.id} >unlink</.ectopic_button>
+      </li>
+    </ul>
+  </div>
+  <.ectopic_button :if={!@end_of_timeline?} class="w-50 justify-center" phx-click="after-social-accounts-page"> 🎉 Load more 🎉
+  </.ectopic_button>
+</div>
+
+<!--div class="overflow-y-scroll h-46 sm:h-64 md:h-96 lg:h-full flex flex-col justify-between">
+  <ul class="scroll-content space-y-4" id="social-providers" phx-update="stream">
+    <li :for={{dom_id, oauth_provider} <- @streams.oauth_providers}} id={dom_id}
+      class="py-2 px-4 flex justify-between items-center">
+      <text>
+      </text>
+      <.navigate_button navigate={~p"/auth/#{oauth_provider.name}"}>connect</.navigate_button>
+    </li>
+  </ul>
+</div>
+<.ectopic_button :if={!@end_of_timeline?} class="w-50 justify-center" phx-click="after-page"> 🎉 Load more 🎉
+</.ectopic_button-->
+

@@ -33,7 +33,7 @@ config :ectopic_social_tool, EctopicSocialTool.Mailer, adapter: Swoosh.Adapters.
 
 config :ectopic_social_tool, Oban,
   repo: EctopicSocialTool.Repo,
-  plugins: [Oban.Plugins.Pruner],
+  plugins: [{Oban.Plugins.Pruner, max_age: 180}],
   queues: [default: 10, publishers: 50]
 
 # Configure esbuild (the version is required)

@@ -1,5 +1,6 @@
 defmodule EctopicSocialToolWeb.PublishingLive.Index do
   use EctopicSocialToolWeb, :live_view
+  alias EctopicSocialTool.Publishers
 
   # def render(assigns) do
   #   ~H"""
@@ -16,11 +17,8 @@ defmodule EctopicSocialToolWeb.PublishingLive.Index do
     {:ok, socket}
   end
 
-  def handle_event("testToast", _params, socket) do
-    {:noreply, socket |> put_flash(:success, "It worked!")}
-  end
-
-  def handle_event("testToast2", _params, socket) do
-    {:noreply, socket |> put_flash(:success, "It worked!")}
+  def handle_event("publish", %{"provider" => provider}, socket) do
+    Publishers.enqueue_job(provider)
+    {:noreply, socket |> put_flash(:info, "Your post is publishing...")}
   end
 end

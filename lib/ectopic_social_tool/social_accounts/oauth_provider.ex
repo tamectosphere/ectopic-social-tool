@@ -6,6 +6,7 @@ defmodule EctopicSocialTool.SocialAccounts.OauthProvider do
   schema "oauth_providers" do
     field :name, :string
     field :logo_url, :string
+    field :is_active, :boolean, default: true
 
     has_many :social_accounts, EctopicSocialTool.SocialAccounts.SocialAccount
 
@@ -19,6 +20,13 @@ defmodule EctopicSocialTool.SocialAccounts.OauthProvider do
       :logo_url
     ])
     |> validate_required([:name])
+  end
+
+  def get_oauth_provider_cursor_query(query) do
+    query
+    |> where([op], op.is_active == true)
+    |> select([op], %{id: op.id, name: op.name})
+    |> order_by([op], asc: op.id)
   end
 
   def get_oauth_provider_query(query, where, select \\ nil, preload \\ []) do

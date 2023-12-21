@@ -4,7 +4,7 @@ defmodule EctopicSocialToolWeb.UserSettingLive do
   def render(assigns) do
     ~H"""
     <.header class="text-center">
-      User SEtting
+      User Setting
     </.header>
     """
   end

@@ -4,24 +4,20 @@ defmodule EctopicSocialTool.Workers.Publisher do
     max_attempts: 3
 
   require Logger
-  alias EctopicSocialTool.Publishers.{Linkedin}
+  alias EctopicSocialTool.Publishers.Linkedin
 
   @impl Worker
-  def backoff(%Oban.Job{attempt: attempt}) do
+  def backoff(%Job{attempt: attempt}) do
     trunc(:math.pow(attempt, 4) + 15 + :rand.uniform(30) * attempt)
   end
 
-  @impl Oban.Worker
+  @impl Worker
   def perform(%Oban.Job{args: %{"provider" => provider} = args}) do
-    Logger.info("processing the job")
+    # Logger.info("processing the job")
 
     case provider do
       "linkedin" ->
         Linkedin.publish(args)
-        :ok
-
-      _ ->
-        {:error, "invalid provider: #{provider}"}
     end
   end
 end
