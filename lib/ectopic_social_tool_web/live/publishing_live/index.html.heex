@@ -1,4 +1,38 @@
 <.header class="text-center">
-  Welcome <%= @current_user.email %>
-  <.ectopic_button phx-click="publish" phx-value-provider="linkedin">Click to publish</.ectopic_button>
+  Publish
 </.header>
+<.modal id="confirm-modal">
+  <.live_component module={EctopicSocialToolWeb.Components.SocialAccountsModal} id="social-account-modal"
+    current_user={@current_user} />
+</.modal>
+<div class="flex flex-col">
+  <div>
+    <.ectopic_button phx-click={show_modal("confirm-modal")}>
+      <%= case @social_account do %>
+        <% nil ->  %>
+        Select social account
+        <% _ -> %>
+        Change social account
+      <% end %>
+    </.ectopic_button>
+  </div>
+  <div class="divider"></div>
+  <text :if={!is_nil(@social_account)}>
+    <%= @social_account["provider_name"] %> - <%= @social_account["title"] %>
+  </text>
+</div>
+
+<.ectopic_form for={@form} id="publish_form" phx-submit="publish" class="flex flex-col" method="post">
+  <.input field={@form[:content]} type="textarea" label="Content" required />
+  <:actions>
+  <.ectopic_button phx-disable-with="Publishing..." disabled={is_nil(@social_account)} class="w-full animate-none"><%= case @social_account do %>
+    <% nil -> %>
+      Please select social account
+    <% _ -> %>
+      Click to publish
+    <% end %>
+  </.ectopic_button>
+  </:actions>
+</.ectopic_form>
+
+  

@@ -17,7 +17,9 @@ module.exports = {
         brand: "#FD681E",
         brandHover: "#FD4F00",
       },
-      
+      fontFamily: {
+        ectopic: ['"Space Grotesk"', 'sans-serif' ],
+     },
       
     },
   },

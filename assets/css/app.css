@@ -3,6 +3,26 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+
+@font-face {
+    font-family: "Space Grotesk";
+    font-weight: 200;
+    src: url("/fonts/space-grotesk.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Space Grotesk";
+    font-weight: 400;
+    src: url("/fonts/space-grotesk.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Space Grotesk";
+    font-weight: 600;
+    src: url("/fonts/space-grotesk.ttf") format("truetype");
+}
+
+
 @keyframes slideDown {
     from {
         opacity: 0;
