@@ -114,3 +114,9 @@
         background-position: 0% 50%;
     }
 }
+
+.social-account-selected {
+    border-width: 2px;
+    border-radius: 0.5rem;
+    border-color: #fca5a5;
+}

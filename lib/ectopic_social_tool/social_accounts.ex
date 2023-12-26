@@ -185,7 +185,7 @@ defmodule EctopicSocialTool.SocialAccounts do
       {:ok, social_account} ->
         {:ok, social_account}
 
-      {:error, changeset} ->
+      {:error, _changeset} ->
         {:error, "Unprocessable Entity"}
     end
   end

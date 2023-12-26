@@ -1,4 +1,4 @@
-defmodule EctopicSocialToolWeb.Components.SocialAccountsModal do
+defmodule EctopicSocialToolWeb.PublishingLive.Components.SocialAccountsList do
   use EctopicSocialToolWeb, :live_component
 
   alias EctopicSocialTool.SocialAccounts
@@ -6,24 +6,18 @@ defmodule EctopicSocialToolWeb.Components.SocialAccountsModal do
   def render(assigns) do
     ~H"""
     <div id={@id}>
-      <div class="overflow-y-scroll h-46 sm:h-64 md:h-96 lg:h-full flex flex-col justify-between">
+      <div class="h-46 sm:h-64 md:h-96 lg:h-full flex flex-col justify-between">
         <ul class="scroll-content space-y-4" id="social-accounts" phx-update="stream">
           <li
             :for={{dom_id, social_accounts} <- @streams.social_accounts}
             }
             id={dom_id}
-            class="py-2 px-4 flex justify-between items-center"
+            class="text-sm  py-2 px-4 flex justify-between items-center cursor-pointer"
+            phx-target={@myself}
+            phx-hook="SelectSocialAccount"
+            phx-click={JS.push("select", value: %{social_accounts: social_accounts})}
           >
             <text><%= social_accounts.provider_name %> - <%= social_accounts.title %></text>
-            <.ectopic_button
-              phx-target={@myself}
-              phx-click={
-                JS.push("select", value: %{social_accounts: social_accounts})
-                |> hide_modal("confirm-modal")
-              }
-            >
-              select
-            </.ectopic_button>
           </li>
         </ul>
       </div>

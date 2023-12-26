@@ -1,38 +1,50 @@
-<.header class="text-center">
-  Publish
-</.header>
-<.modal id="confirm-modal">
-  <.live_component module={EctopicSocialToolWeb.Components.SocialAccountsModal} id="social-account-modal"
-    current_user={@current_user} />
-</.modal>
-<div class="flex flex-col">
-  <div>
-    <.ectopic_button phx-click={show_modal("confirm-modal")}>
-      <%= case @social_account do %>
-        <% nil ->  %>
-        Select social account
-        <% _ -> %>
-        Change social account
-      <% end %>
-    </.ectopic_button>
+<div class="flex flex-row grow h-screen">
+  <div class="basis-1/4 border-r border-zinc-100 p-6">
+    <div class="collapse collapse-arrow">
+      <input type="checkbox" checked={true} />
+      <div class="collapse-title ">
+        Social accounts
+      </div>
+      <div class="collapse-content">
+        <.live_component module={EctopicSocialToolWeb.PublishingLive.Components.SocialAccountsList} id="social-accounts-list"
+          current_user={@current_user} />
+      </div>
+    </div>
+    <.navigate_button navigate={~p"/social-channels"}>Add new social account</.navigate_button>
   </div>
-  <div class="divider"></div>
-  <text :if={!is_nil(@social_account)}>
-    <%= @social_account["provider_name"] %> - <%= @social_account["title"] %>
-  </text>
+  <div class="basis-full">
+    <%= case @social_account do %>
+      <% nil -> %>
+        <div class="flex items-center justify-center p-6 gap-16 text-base">
+          Please select social account...
+        </div>
+      <% _ -> %>
+        <.modal id="create-post-modal">
+          <%= "#{@social_account["provider_name"]} - #{@social_account["title"]}" %>
+          <.ectopic_form for={@form} id="publish_form" phx-submit="publish" class="flex flex-col" method="post">
+            <.input field={@form[:content]} type="textarea" label="Content" required />
+            <:actions>
+              <.ectopic_button phx-disable-with="Publishing..." disabled={is_nil(@social_account)} class="w-full animate-none">
+                <%= case @social_account do %>
+                  <% nil -> %>
+                    Please select social account
+                    <% _ -> %>
+                      Click to publish
+                      <% end %>
+              </.ectopic_button>
+            </:actions>
+            </.ectopic_form>
+        </.modal>
+        <div class="flex flex-col justify-start p-6 max-w-4xl gap-6">
+          <div>
+            <.ectopic_button phx-click={show_modal("create-post-modal")}>
+              Create post
+            </.ectopic_button>
+          </div>
+        </div>
+      <% end %>
+  </div>
 </div>
 
-<.ectopic_form for={@form} id="publish_form" phx-submit="publish" class="flex flex-col" method="post">
-  <.input field={@form[:content]} type="textarea" label="Content" required />
-  <:actions>
-  <.ectopic_button phx-disable-with="Publishing..." disabled={is_nil(@social_account)} class="w-full animate-none"><%= case @social_account do %>
-    <% nil -> %>
-      Please select social account
-    <% _ -> %>
-      Click to publish
-    <% end %>
-  </.ectopic_button>
-  </:actions>
-</.ectopic_form>
 
   

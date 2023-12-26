@@ -4,7 +4,7 @@ defmodule EctopicSocialToolWeb.PublishingLive.Index do
 
   def mount(_params, _session, socket) do
     form =
-      to_form(%{"content" => nil}, as: "publisher")
+      to_form(%{"content" => nil}, as: "published_content")
 
     socket =
       socket
@@ -14,12 +14,14 @@ defmodule EctopicSocialToolWeb.PublishingLive.Index do
     {:ok, socket, temporary_assigns: [form: form]}
   end
 
-  def handle_event("publish", %{"publisher" => %{"content" => content}}, socket) do
-    IO.inspect(content, label: "content")
-    IO.inspect(socket.assigns, label: "socket")
-    {:noreply, socket}
-    # Publishers.enqueue_job(provider)
-    # {:noreply, socket |> put_flash(:info, "Your post is publishing...")}
+  def handle_event("publish", %{"published_content" => published_content}, socket) do
+    Publishers.enqueue_job(
+      socket.assigns.social_account,
+      socket.assigns.current_user,
+      published_content
+    )
+
+    {:noreply, socket |> put_flash(:info, "Your post is publishing...")}
   end
 
   def handle_info({:selected_account, social_account}, socket) do

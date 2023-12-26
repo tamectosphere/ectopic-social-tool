@@ -24,6 +24,22 @@ import topbar from "../vendor/topbar"
 
 let Hooks = {}
 
+Hooks.SelectSocialAccount = {
+  mounted() {
+    this.el.addEventListener("click", e => {
+      // Remove the class from the previously selected element
+      let previous = this.el.closest("ul").querySelector(".social-account-selected");
+      if (previous) {
+        previous.classList.remove("social-account-selected");
+      }
+
+      // Add the class to the current element
+      this.el.classList.add("social-account-selected");
+    });
+  }
+};
+
+
 Hooks.OnToastOpen = {
     mounted() {
         const toasts = document.querySelectorAll(".toast");
