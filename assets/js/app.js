@@ -24,6 +24,31 @@ import topbar from "../vendor/topbar"
 
 let Hooks = {}
 
+Hooks.DateTimePickerToggle = {
+  mounted() {
+
+    let checkBox = document.querySelector('input[id="published_content_is_scheduled_post"]');
+    let dateTimePicker = this.el;
+
+    this.toggleDateTimePicker(checkBox, dateTimePicker);
+
+    checkBox.addEventListener("change", () => {
+      this.toggleDateTimePicker(checkBox, dateTimePicker);
+    });
+  },
+
+  toggleDateTimePicker(checkBox, dateTimePicker) {
+
+    if (checkBox.checked) {
+        // this.pushEvent("toggle_scheduled_post", {is_scheduled_post: true})
+        dateTimePicker.style.display = "block";
+    } else {
+        // this.pushEvent("toggle_scheduled_post", {is_scheduled_post: false})
+        dateTimePicker.style.display = "none";
+    }
+  },
+};
+
 Hooks.SelectSocialAccount = {
   mounted() {
     this.el.addEventListener("click", e => {

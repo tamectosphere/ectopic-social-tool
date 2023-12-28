@@ -5,14 +5,17 @@ defmodule EctopicSocialTool.Posts.Post do
 
   schema "posts" do
     field :content, :map
-    field :type, :string
-    field :status, :string
+    field :type, Ecto.Enum, values: [:now, :scheduled]
+    field :status, Ecto.Enum, values: [:pending, :completed, :failed]
     field :result, :map
     field :return_post_id, :string
     field :scheduled_at, :utc_datetime
     field :completed_at, :utc_datetime
 
     belongs_to :social_account, EctopicSocialTool.SocialAccounts.SocialAccount
+
+    many_to_many :users, EctopicSocialTool.Users.User,
+      join_through: EctopicSocialTool.Users.UserPost
 
     timestamps()
   end

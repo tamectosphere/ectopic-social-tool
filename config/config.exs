@@ -22,6 +22,10 @@ config :ectopic_social_tool, EctopicSocialToolWeb.Endpoint,
   pubsub_server: EctopicSocialTool.PubSub,
   live_view: [signing_salt: "KeXPbmMo"]
 
+config :ectopic_social_tool,
+       :http_linkedin_client,
+       EctopicSocialTool.ExternalApi.LinkedinClient
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

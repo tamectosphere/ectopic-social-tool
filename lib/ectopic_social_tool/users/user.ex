@@ -10,6 +10,9 @@ defmodule EctopicSocialTool.Users.User do
 
     has_many :social_accounts, EctopicSocialTool.SocialAccounts.SocialAccount
 
+    many_to_many :posts, EctopicSocialTool.Posts.Post,
+      join_through: EctopicSocialTool.Users.UserPost
+
     timestamps(type: :utc_datetime)
   end
 

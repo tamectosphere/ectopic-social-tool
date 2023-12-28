@@ -21,19 +21,16 @@
       <% _ -> %>
         <.modal id="create-post-modal">
           <%= "#{@social_account["provider_name"]} - #{@social_account["title"]}" %>
-          <.ectopic_form for={@form} id="publish_form" phx-submit="publish" class="flex flex-col" method="post">
-            <.input field={@form[:content]} type="textarea" label="Content" required />
+          <.ectopic_form for={@form} id="publish_form" phx-submit="publish" class="flex flex-col" phx-change="validate" method="post">
+            <.input field={@form[:text]} type="textarea" label="Content" required /> 
+            <.input field={@form[:is_scheduled_post]} type="checkbox" label="Schedule post" />
+            <.input id="date-time-picker" field={@form[:scheduled_at]} type="datetime-local" phx-hook="DateTimePickerToggle" />
             <:actions>
               <.ectopic_button phx-disable-with="Publishing..." disabled={is_nil(@social_account)} class="w-full animate-none">
-                <%= case @social_account do %>
-                  <% nil -> %>
-                    Please select social account
-                    <% _ -> %>
-                      Click to publish
-                      <% end %>
+                Click to publish
               </.ectopic_button>
             </:actions>
-            </.ectopic_form>
+          </.ectopic_form>
         </.modal>
         <div class="flex flex-col justify-start p-6 max-w-4xl gap-6">
           <div>

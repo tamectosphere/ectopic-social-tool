@@ -6,12 +6,13 @@ import Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :ectopic_social_tool, EctopicSocialTool.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "ectopic_social_tool_local",
+  password: "localpass",
   hostname: "localhost",
   database: "ectopic_social_tool_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
-  pool_size: 10
+  pool_size: 10,
+  port: 5031
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
@@ -19,6 +20,10 @@ config :ectopic_social_tool, EctopicSocialToolWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "KlXPA2wMUp3kgsFIoGYGNunYUUgUVNm9b9af16g85kgu6Czxx22LQVKnVjhHhHiK",
   server: false
+
+config :ectopic_social_tool,
+       :http_linkedin_client,
+       EctopicSocialTool.ExternalApi.LinkedinBehaviourMock
 
 # In test we don't send emails.
 config :ectopic_social_tool, EctopicSocialTool.Mailer, adapter: Swoosh.Adapters.Test

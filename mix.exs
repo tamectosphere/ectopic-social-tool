@@ -54,7 +54,8 @@ defmodule EctopicSocialTool.MixProject do
       {:bcrypt_elixir, "~> 3.0"},
       {:assent, "~> 0.2.9"},
       {:oban, "~> 2.16"},
-      {:paginator, "~> 1.2.0"}
+      {:paginator, "~> 1.2.0"},
+      {:mox, "~> 1.0", only: :test}
     ]
   end
 

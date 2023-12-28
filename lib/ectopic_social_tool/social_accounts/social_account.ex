@@ -14,6 +14,7 @@ defmodule EctopicSocialTool.SocialAccounts.SocialAccount do
 
     belongs_to :user, EctopicSocialTool.Users.User
     belongs_to :oauth_provider, EctopicSocialTool.SocialAccounts.OauthProvider
+    has_many :posts, EctopicSocialTool.Posts.Post
 
     timestamps()
   end

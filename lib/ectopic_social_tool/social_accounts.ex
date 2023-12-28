@@ -58,15 +58,15 @@ defmodule EctopicSocialTool.SocialAccounts do
     end
   end
 
-  defp social_account_exists?(nil) do
+  def social_account_exists?(nil) do
     {:error, "Social account not found"}
   end
 
-  defp social_account_exists?(_) do
+  def social_account_exists?(_) do
     {:ok, true}
   end
 
-  defp belong_to_user?(social_account_user_id, user_id) do
+  def belong_to_user?(social_account_user_id, user_id) do
     case social_account_user_id == user_id do
       true ->
         {:ok, true}
@@ -206,7 +206,7 @@ defmodule EctopicSocialTool.SocialAccounts do
     end
   end
 
-  defp get_social_account_by_id(social_account_id) do
+  def get_social_account_by_id(social_account_id) do
     SocialAccount.get_social_account_query(
       SocialAccount,
       [
