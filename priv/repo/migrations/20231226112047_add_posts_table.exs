@@ -7,7 +7,7 @@ defmodule EctopicSocialTool.Repo.Migrations.AddPostsTable do
       add :type, :string, null: false
       add :status, :string, null: false
       add :result, :map, default: "{}", null: false
-      add :return_post_id, :string, null: false
+      add :return_post_id, :string, null: true
       add :scheduled_at, :utc_datetime, null: true
       add :completed_at, :utc_datetime, null: true
       add :social_account_id, references(:social_accounts, on_delete: :nothing), null: false

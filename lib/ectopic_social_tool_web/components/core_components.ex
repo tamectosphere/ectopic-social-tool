@@ -27,6 +27,7 @@ defmodule EctopicSocialToolWeb.CoreComponents do
   defdelegate ectopic_button(assigns), to: SharedComponents
   defdelegate navigate_button(assigns), to: SharedComponents
   defdelegate ectopic_form(assigns), to: SharedComponents
+  defdelegate datetime_picker(assigns), to: SharedComponents
 
   @doc """
   Renders a modal.
@@ -57,7 +58,7 @@ defmodule EctopicSocialToolWeb.CoreComponents do
       phx-mounted={@show && show_modal(@id)}
       phx-remove={hide_modal(@id)}
       data-cancel={JS.exec(@on_cancel, "phx-remove")}
-      class="relative z-50 hidden"
+      class="relative z-40 hidden"
     >
       <div id={"#{@id}-bg"} class="bg-zinc-50/90 fixed inset-0 transition-opacity" aria-hidden="true" />
       <div

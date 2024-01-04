@@ -1,8 +1,13 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "flatpickr/dist/flatpickr.css";
 
 /* This file is for your main application CSS */
+
+html {
+    scroll-behavior: smooth;
+}
 
 @font-face {
     font-family: "Space Grotesk";

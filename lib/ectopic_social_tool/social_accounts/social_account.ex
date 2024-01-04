@@ -16,7 +16,7 @@ defmodule EctopicSocialTool.SocialAccounts.SocialAccount do
     belongs_to :oauth_provider, EctopicSocialTool.SocialAccounts.OauthProvider
     has_many :posts, EctopicSocialTool.Posts.Post
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   def changeset(social_account, attrs) do

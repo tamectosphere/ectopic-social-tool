@@ -11,5 +11,9 @@
   "license": "ISC",
   "devDependencies": {
     "daisyui": "^4.4.19"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.10",
+    "flatpickr": "^4.6.13"
   }
 }

@@ -167,4 +167,25 @@ defmodule EctopicSocialToolWeb.CoreComponents.SharedComponents do
     </.form>
     """
   end
+
+  attr :id, :string, required: true
+
+  attr :field, Phoenix.HTML.FormField,
+    doc: "a form field struct retrieved from the form, for example: @form[:occurred_at]"
+
+  attr :label, :string, default: nil
+
+  def datetime_picker(assigns) do
+    ~H"""
+    <div id={@id} phx-update="ignore" phx-hook="DateTimePickerToggle">
+      <EctopicSocialToolWeb.CoreComponents.input
+        field={@field}
+        type="text"
+        phx-hook="DateTimePicker"
+        label={@label}
+        placeholder="Select date and time..."
+      />
+    </div>
+    """
+  end
 end

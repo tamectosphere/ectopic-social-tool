@@ -21,11 +21,36 @@ import "phoenix_html"
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
+import flatpickr from "flatpickr";
+const dayjs = require('dayjs')
 
 let Hooks = {}
 
+Hooks.DateTimePicker = {
+  mounted() {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+
+    flatpickr(this.el, {
+      enableTime: true,
+      altFormat: "d/m/Y H:i",
+      dateFormat: "Z",
+      minuteIncrement: 1,
+      time_24hr: true,
+      altInput: true,
+      static: true,
+      wrap: false, 
+      minDate: "today",
+      defaultHour: currentHour,
+      defaultMinute: currentMinute
+    })
+  },
+} 
+
 Hooks.DateTimePickerToggle = {
   mounted() {
+    
 
     let checkBox = document.querySelector('input[id="published_content_is_scheduled_post"]');
     let dateTimePicker = this.el;
@@ -40,11 +65,11 @@ Hooks.DateTimePickerToggle = {
   toggleDateTimePicker(checkBox, dateTimePicker) {
 
     if (checkBox.checked) {
-        // this.pushEvent("toggle_scheduled_post", {is_scheduled_post: true})
-        dateTimePicker.style.display = "block";
+        dateTimePicker.style.display = "block"; 
+        dateTimePicker.setAttribute("required", "required");
     } else {
-        // this.pushEvent("toggle_scheduled_post", {is_scheduled_post: false})
         dateTimePicker.style.display = "none";
+        dateTimePicker.removeAttribute("required")
     }
   },
 };
@@ -62,8 +87,27 @@ Hooks.SelectSocialAccount = {
       this.el.classList.add("social-account-selected");
     });
   }
-};
+}; 
 
+Hooks.ConvertDateTime = {
+    mounted() {
+        this.updateDateTime();
+    },
+    updated() {
+        this.updateDateTime();
+    },
+    updateDateTime() {
+        const utcDatetimeElement = this.el;
+        const utcDatetimeString = utcDatetimeElement.getAttribute("data-utc-datetime");
+
+        if (utcDatetimeString) {
+            const userTimezoneDatetime = dayjs(utcDatetimeString).format("DD/MM/YYYY HH:mm:ss");
+            utcDatetimeElement.textContent = userTimezoneDatetime;
+        } else {
+            utcDatetimeElement.textContent = "";
+        }
+    }
+}
 
 Hooks.OnToastOpen = {
     mounted() {
@@ -82,7 +126,6 @@ Hooks.OnToastOpen = {
         });
     }
 }
-
 
 Hooks.OnToastClose = {
     mounted() {
@@ -118,7 +161,27 @@ let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToke
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
 window.addEventListener("phx:page-loading-start", _info => topbar.show(300))
 window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
+window.addEventListener(
+  "phx:close-modal",
+  e => {
+    let el = document.getElementById(e.detail.id)
+    liveSocket.execJS(el, el.getAttribute("on-close"))
+  }
+)
 
+window.addEventListener(
+  "phx:scroll-to",
+  e => {
+    const el = document.getElementById(e.detail.id);
+    if (el) {
+      const elPosition = el.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: elPosition,
+        behavior: "smooth"
+      });
+    }
+  }
+)
 // connect if there are any LiveViews on the page
 liveSocket.connect()
 

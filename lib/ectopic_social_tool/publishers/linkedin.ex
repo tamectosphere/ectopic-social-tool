@@ -3,14 +3,18 @@ defmodule EctopicSocialTool.Publishers.Linkedin do
   alias EctopicSocialTool.Repo
   alias EctopicSocialTool.Utils
 
+  def generate_published_post_link(return_post_id) when is_binary(return_post_id) do
+    "#{get_linkedin_base_url()}/feed/update/urn:li:share:#{return_post_id}"
+  end
+
   def publish(post, attempt) do
     social_account = post.social_account
 
     body_params =
       build_body_params(
         social_account.social_account_id,
-        post.content.text,
-        post.content.visibility
+        post.content["text"],
+        post.content["visibility"]
       )
 
     case EctopicSocialTool.http_client(:linkedin).post_content(
@@ -26,7 +30,7 @@ defmodule EctopicSocialTool.Publishers.Linkedin do
   end
 
   defp build_body_params(urn, text, visibility) do
-    Jason.encode!(%{
+    %{
       author: "urn:li:person:#{urn}",
       lifecycleState: "PUBLISHED",
       specificContent: %{
@@ -38,10 +42,10 @@ defmodule EctopicSocialTool.Publishers.Linkedin do
       visibility: %{
         "com.linkedin.ugc.MemberNetworkVisibility": visibility
       }
-    })
+    }
   end
 
-  defp handle_publish_response(post, body, 200, _) do
+  defp handle_publish_response(post, body, 201, _) do
     case Repo.update(
            Ecto.Changeset.change(post, %{
              status: :completed,
@@ -100,5 +104,7 @@ defmodule EctopicSocialTool.Publishers.Linkedin do
     {:error, %{reason: reason}}
   end
 
-  def transform_return_post_id(id) when is_binary(id), do: String.split(id, ":") |> List.last()
+  defp transform_return_post_id(id) when is_binary(id), do: String.split(id, ":") |> List.last()
+
+  defp get_linkedin_base_url, do: System.fetch_env!("LINKEDIN_BASE_URL")
 end

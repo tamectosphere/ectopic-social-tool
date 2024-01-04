@@ -17,7 +17,7 @@ defmodule EctopicSocialTool.Posts.Post do
     many_to_many :users, EctopicSocialTool.Users.User,
       join_through: EctopicSocialTool.Users.UserPost
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   def changeset(post, attrs, type) do

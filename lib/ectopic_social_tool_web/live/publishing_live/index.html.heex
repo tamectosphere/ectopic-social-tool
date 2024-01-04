@@ -19,14 +19,18 @@
           Please select social account...
         </div>
       <% _ -> %>
-        <.modal id="create-post-modal">
+        <.modal id="create-post-modal" >
           <%= "#{@social_account["provider_name"]} - #{@social_account["title"]}" %>
-          <.ectopic_form for={@form} id="publish_form" phx-submit="publish" class="flex flex-col" phx-change="validate" method="post">
-            <.input field={@form[:text]} type="textarea" label="Content" required /> 
+          <.ectopic_form for={@form} id="publish_form" phx-submit="publish" class="flex flex-col" method="post">
+            <.input field={@form[:text]} type="textarea" label="Content" required />
+            <.input field={@form[:visibility]} type="select" label="Visibility" options={[Public: "PUBLIC", Connentions: "CONNECTIONS"]} required />
+            
+         
             <.input field={@form[:is_scheduled_post]} type="checkbox" label="Schedule post" />
-            <.input id="date-time-picker" field={@form[:scheduled_at]} type="datetime-local" phx-hook="DateTimePickerToggle" />
+            <.datetime_picker id="date-time-picker" field={@form[:scheduled_at]} />
+           
             <:actions>
-              <.ectopic_button phx-disable-with="Publishing..." disabled={is_nil(@social_account)} class="w-full animate-none">
+              <.ectopic_button type="submit" name="create-post-button" phx-disable-with="Publishing..." disabled={is_nil(@social_account)} class="w-full animate-none">
                 Click to publish
               </.ectopic_button>
             </:actions>
@@ -34,10 +38,12 @@
         </.modal>
         <div class="flex flex-col justify-start p-6 max-w-4xl gap-6">
           <div>
-            <.ectopic_button phx-click={show_modal("create-post-modal")}>
+            <.ectopic_button  id="create-post-button" phx-click={show_modal("create-post-modal")} on-close={hide_modal("create-post-modal")}>
               Create post
             </.ectopic_button>
           </div>
+          <.live_component module={EctopicSocialToolWeb.PublishingLive.Components.UserPostsList} id="user-posts-list"
+            current_user={@current_user} social_account={@social_account} new_item={nil} />
         </div>
       <% end %>
   </div>
